@@ -119,5 +119,6 @@ const checkPassword = async (pass) => {
     catch (ex) {
         alert(ex.message)
     }
+
     
 }

@@ -23,7 +23,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 
 
 builder.Services.AddDbContext<MyStoreContext>(option => option.UseSqlServer
-("Server=srv2\\pupils;Database=myStore;Trusted_Connection=True;TrustServerCertificate=True"));
+("Server=srv2\\pupils;Database=theShop;Trusted_Connection=True;TrustServerCertificate=True"));
 
 var app = builder.Build();
 
