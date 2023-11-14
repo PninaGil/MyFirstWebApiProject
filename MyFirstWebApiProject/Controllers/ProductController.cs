@@ -16,8 +16,9 @@ namespace MyFirstWebApiProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Product>> GetAllProducts(){
-           return await _productService.GetAllProducts(); 
+        public async Task<IEnumerable<Product>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
+        {
+           return await _productService.GetProducts(Desc, minPrice, maxPrice, categoryIds); 
    }
     }
 }
