@@ -28,7 +28,7 @@ namespace Repository
             //.Skip((position-1)*skip)
             //.Take(skip);
             Console.WriteLine(query.ToQueryString());
-            List<Product> products = await query.ToListAsync();
+            IEnumerable<Product> products = await query.ToListAsync();
             return products;
         }
 

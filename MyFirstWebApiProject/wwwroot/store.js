@@ -53,6 +53,6 @@ const getCategories = async () => {
 const showCategory = (category) => {
     temp = document.getElementById("temp-category")
     var cloneCategory = temp.content.cloneNode(true)
-    cloneCategory.querySelector("checkbox").innerText = category.name;
+    cloneCategory.querySelector(".opt").innerText = category.name;
 }
 
