@@ -19,9 +19,9 @@ const filterProducts = async () => {
 
 const drawProduct = (product) => {
     tmp = document.getElementById("temp-card")
-    var cloneProduct = tmp.content.cloneProduct(true)
-    document.getElementById("ProductList").innerHTML("")
-    cloneProduct.querySelector("img").source = "./pic/" + product.imageUrl
+    var cloneProduct = tmp.content.cloneNode(true)
+    /*document.getElementById("ProductList").innerHTML("")*/
+    cloneProduct.querySelector("img").source = "./pic" + product.image
     cloneProduct.querySelector("h1").innerText = product.productName
     cloneProduct.querySelector(".price").innerText = product.price + '₪'
     cloneProduct.querySelector(".description").innerText = product.description
