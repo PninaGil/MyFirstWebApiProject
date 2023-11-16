@@ -25,11 +25,11 @@ namespace MyFirstWebApiProject.Controllers
         }
 
         // GET api/<categoryController>/5
-        [HttpGet("{id}")]
-        public async Task<Category> Get(int id)
-        {
-            return await _categoryService.GetCategoryById(id);
-        }
+        //[HttpGet("{id}")]
+        //public async Task<Category> Get(int id)
+        //{
+        //    return await _categoryService.GetCategoryById(id);
+        //}
 
        
     }

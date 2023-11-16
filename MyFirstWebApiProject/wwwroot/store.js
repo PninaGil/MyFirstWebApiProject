@@ -1,7 +1,11 @@
 ﻿
 const filterProducts = async () => {
     try {
-        const product = await fetch("/api/Product",{
+        let minPrice = document.getElementById("minPrice").value
+        let maxPrice = document.getElementById("maxPrice").value
+        let desc = document.getElementById("nameSearch").value
+        /*const categoryids = document.getElementById("")*/
+        const product = await fetch(`/api/Product?minPrice=${minPrice}&maxPrice=${maxPrice}&Desc=${desc}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -11,6 +15,8 @@ const filterProducts = async () => {
         if (!product.ok)
             throw("problem on get products")
         const products = await product.json()
+        document.getElementById("ProductList").replaceChildren([])
+
         products.forEach(p => drawProduct(p))
     } catch (ex) {
         alert(ex.message+" products")
@@ -20,8 +26,7 @@ const filterProducts = async () => {
 const drawProduct = (product) => {
     tmp = document.getElementById("temp-card")
     var cloneProduct = tmp.content.cloneNode(true)
-    /*document.getElementById("ProductList").innerHTML("")*/
-    cloneProduct.querySelector("img").source = "./pic" + product.image
+    cloneProduct.querySelector("img").src = './pic/' + product.image
     cloneProduct.querySelector("h1").innerText = product.productName
     cloneProduct.querySelector(".price").innerText = product.price + '₪'
     cloneProduct.querySelector(".description").innerText = product.description
@@ -35,7 +40,7 @@ const addrtoCart = (product) => {
 
 const getCategories = async () => {
     try {
-        const c = fetch("/api/Category", {
+        const c = await fetch("/api/Category", {
             method: 'GET',
             headers: {
                 'Content-Type': "application/json"
@@ -45,14 +50,22 @@ const getCategories = async () => {
         if (!c.ok)
             alert("problem on get categories")
         const category = await c.json()
-        category.forEach(c => showCategory(c))
+        for (let i = 0; i < category.length; i++) {
+            console.log(category[i]);
+            showCategory(category[i])
+        }
+        //category.forEach(cat => console.log(cat), showCategory(cat))
     } catch (ex) {
         alert(ex.message)
     }
 }
 const showCategory = (category) => {
-    temp = document.getElementById("temp-category")
+    console.log("fgdhyu");
+    let temp = document.getElementById("temp-category")
     var cloneCategory = temp.content.cloneNode(true)
-    cloneCategory.querySelector(".opt").innerText = category.name;
+    cloneCategory.querySelector(".OptionName").innerText = category.categoryName;
+    document.getElementById("categoryList").appendChild(cloneCategory)
+    //document.getElementById("categoryList").addEventListener('blur', ()=> filterProducts())
+    )
 }
 
