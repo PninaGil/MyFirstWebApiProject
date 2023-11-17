@@ -20,7 +20,7 @@
     </template>
     <template id="temp-category">
         <div class="cb checkbox">
-            <input type="checkbox" class="opt" id="" value="" onblur="filterProducts()">
+            <input type="checkbox" class="opt" id="" value="" >
             <label for="">
                 <span class="OptionName"></span>
                 <span class="Count"></span>
@@ -92,10 +92,10 @@
         <div id="priceRangeFilter" class="filterBreak">
             <div><span id="counter">  </span> מחיר:</div>
 
-            <input type="text" maxlength="9" id="minPrice" class="priceInputText">
+            <input type="text" maxlength="9" id="minPrice" class="priceInputText" placeholder="Min">
             <span class="priceCurrency">₪</span>
 
-            <input type="text" maxlength="9" id="maxPrice" class="priceInputText">
+            <input type="text" maxlength="9" id="maxPrice" class="priceInputText" placeholder="Max">
             <span class="priceCurrency">₪</span>
             <button onclick="filterProducts()">
                 <span><img src="searchIcon.svg" alt="סמל חיפוש"></span>
