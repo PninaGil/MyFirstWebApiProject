@@ -8,7 +8,7 @@ const filterProducts = async () => {
     let url = `/api/Product?minPrice=${minPrice}&maxPrice=${maxPrice}&Desc=${desc}`
     for (let i = 0; i < opt.length; i++) {
         if (opt[i].checked)
-            url += "&categoriIds=" + opt[i].id
+            url += "&categoryIds=" + opt[i].id
     }
 
 
@@ -31,7 +31,7 @@ const filterProducts = async () => {
         alert(ex.message+" products")
     }
 }
-
+let counter = 0
 const drawProduct = (product) => {
     tmp = document.getElementById("temp-card")
     var cloneProduct = tmp.content.cloneNode(true)
@@ -42,8 +42,13 @@ const drawProduct = (product) => {
     cloneProduct.querySelector("button").addEventListener("click", () => addToCart(product))
     document.getElementById("ProductList").appendChild(cloneProduct)
 }
+let cartProducts = []
 
-const addrtoCart = (product) => {
+const addToCart = (product) => {
+    cartProducts.push(product);
+    sessionStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+    counter++
+    document.getElementById("ItemsCountText").innerText = counter
 
 }
 

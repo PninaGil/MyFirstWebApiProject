@@ -24,7 +24,7 @@ namespace Repository
             && ((minPrice == null) ? (true) : (product.Price >= minPrice))
             && ((maxPrice == null) ? (true) : (product.Price <= maxPrice))
             && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(product.CategoryId)))
-            ).OrderBy(product => product.Price);
+            ).OrderBy(product => product.ProductName);
             //.Skip((position-1)*skip)
             //.Take(skip);
             Console.WriteLine(query.ToQueryString());
