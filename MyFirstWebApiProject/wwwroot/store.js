@@ -3,14 +3,16 @@ const filterProducts = async () => {
     let minPrice = document.getElementById("minPrice").value
     let maxPrice = document.getElementById("maxPrice").value
     let desc = document.getElementById("nameSearch").value
+
     let opt = document.getElementsByClassName("opt")
     let url = `/api/Product?minPrice=${minPrice}&maxPrice=${maxPrice}&Desc=${desc}`
     for (let i = 0; i < opt.length; i++) {
         if (opt[i].checked)
             url += "&categoriIds=" + opt[i].id
     }
-    try {
-       
+
+
+    try {   
         /*const categoryids = document.getElementById("")*/
         const product = await fetch(url,{
             method: 'GET',
@@ -71,9 +73,10 @@ const showCategory = (category) => {
     let temp = document.getElementById("temp-category")
     var cloneCategory = temp.content.cloneNode(true)
     cloneCategory.querySelector(".OptionName").innerText = category.categoryName;
-    cloneCategory.querySelector(".OptionName").id = category.categoryId
+    cloneCategory.querySelector(".opt").id = category.categoryId
+    cloneCategory.querySelector("label").setAttribute("for", category.id);
     document.getElementById("categoryList").addEventListener('click', () => filterProducts())
-    document.getElementById("categoryList").appendChild(cloneCategory)
+    document.getElementById("categoryList").appendChild(cloneCategory) 
 
 }
 
