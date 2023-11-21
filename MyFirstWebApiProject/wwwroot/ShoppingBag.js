@@ -31,16 +31,22 @@ const showCart =(product) => {
 
 const placeOrder = async () => {
     try {
-        
         const products = sessionStorage.getItem("cartProducts")
-        const userId= sessionStorage.getItem("User").userId
+        let userId = sessionStorage.getItem("User")
+        if (userId)
+            userId = userId.userId
+        else {
+            alert("Please login,\nWaiting to see you here :)")
+            document.location = 'login.html'
+            return
+        }
 
-        const order = await fetch(`api/Order/?userId=${userId}`, {
+        const order = await fetch(`api/Order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: userId,products
+            body: { userId, products }
         })
         if (!order.ok)
             alert("Error: problem on post-order")
