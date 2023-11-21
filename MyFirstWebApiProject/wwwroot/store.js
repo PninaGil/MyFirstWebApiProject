@@ -1,5 +1,9 @@
 ﻿
+
 const filterProducts = async () => {
+    let cart = JSON.parse(sessionStorage.getItem("cartProducts"))
+    document.getElementById("ItemsCountText").innerText = cart?.length || 0
+
     let minPrice = document.getElementById("minPrice").value
     let maxPrice = document.getElementById("maxPrice").value
     let desc = document.getElementById("nameSearch").value
@@ -10,7 +14,6 @@ const filterProducts = async () => {
         if (opt[i].checked)
             url += "&categoryIds=" + opt[i].id
     }
-
 
     try {   
         /*const categoryids = document.getElementById("")*/
@@ -31,7 +34,7 @@ const filterProducts = async () => {
         alert(ex.message+" products")
     }
 }
-let counter = 0
+
 const drawProduct = (product) => {
     tmp = document.getElementById("temp-card")
     var cloneProduct = tmp.content.cloneNode(true)
@@ -42,14 +45,13 @@ const drawProduct = (product) => {
     cloneProduct.querySelector("button").addEventListener("click", () => addToCart(product))
     document.getElementById("ProductList").appendChild(cloneProduct)
 }
-let cartProducts = []
+
+let cartProducts = JSON.parse(sessionStorage.getItem("cartProducts")) || []
 
 const addToCart = (product) => {
-    cartProducts.push(product);
+    cartProducts.push(product)
     sessionStorage.setItem("cartProducts", JSON.stringify(cartProducts))
-    counter++
-    document.getElementById("ItemsCountText").innerText = counter
-
+    document.getElementById("ItemsCountText").innerText = cartProducts.length
 }
 
 const getCategories = async () => {
@@ -65,7 +67,6 @@ const getCategories = async () => {
             alert("problem on get categories")
         const category = await c.json()
         for (let i = 0; i < category.length; i++) {
-            console.log(category[i]);
             showCategory(category[i])
         }
         //category.forEach(cat => console.log(cat), showCategory(cat))
@@ -74,7 +75,6 @@ const getCategories = async () => {
     }
 }
 const showCategory = (category) => {
-    console.log("fgdhyu");
     let temp = document.getElementById("temp-category")
     var cloneCategory = temp.content.cloneNode(true)
     cloneCategory.querySelector(".OptionName").innerText = category.categoryName;

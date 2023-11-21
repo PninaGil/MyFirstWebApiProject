@@ -19,6 +19,10 @@ namespace Repository
         public async Task<Order> AddOrder(Order order)
         {
             await _myStoreContext.Orders.AddAsync(order);
+            foreach (var item in order.OrderItems)
+            {
+                await _myStoreContext.OrderItems.AddAsync(item);
+            }
             await _myStoreContext.SaveChangesAsync();
             return order;
         }
