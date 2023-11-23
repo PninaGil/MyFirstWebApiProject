@@ -21,7 +21,7 @@ namespace MyFirstWebApiProject.Controllers
         [HttpPost]
         public async Task<Order> Post([FromBody] Order order)
         {
-            order.select()
+            //order.select()
             return await _orderService.AddOrder(order);
         }
     }
