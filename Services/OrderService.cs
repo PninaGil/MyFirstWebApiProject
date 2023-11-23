@@ -17,17 +17,14 @@ namespace Services
             this._orderRepository = orderRepository;
         }
 
-        public async Task<Order> AddOrder(int userId, IEnumerable<Product> products)
+        public async Task<Order> AddOrder(Order order)
         {
-            Order order = new Order();
-
-            order.UserId = userId;
             order.OrderDate = DateTime.Today;
 
             int sum = 0;
-            foreach (var p in products)
+            foreach (var p in order.OrderItems)
             {
-                sum += p.Price;
+                sum += p.Product.Price;
             }
             order.OrderSum = sum;
 

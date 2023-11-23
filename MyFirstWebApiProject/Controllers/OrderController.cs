@@ -19,9 +19,10 @@ namespace MyFirstWebApiProject.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<Order> Post([FromBody] int userId, [FromQuery] IEnumerable<Product> products)
+        public async Task<Order> Post([FromBody] Order order)
         {
-            return await _orderService.AddOrder(userId, products);
+            order.select()
+            return await _orderService.AddOrder(order);
         }
     }
 }

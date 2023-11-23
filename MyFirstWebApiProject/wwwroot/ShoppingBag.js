@@ -1,7 +1,6 @@
-﻿
+﻿let sum = 0
 const getProduct = async () => {
     let products = JSON.parse(sessionStorage.getItem("cartProducts"))
-    let sum = 0
     let count = 0
     if (!products) {
         document.getElementById("noItems").innerText="Add products to cart to see them here."
@@ -31,24 +30,40 @@ const showCart =(product) => {
 
 const placeOrder = async () => {
     try {
-        const products = sessionStorage.getItem("cartProducts")
-        let userId = sessionStorage.getItem("User")
-        if (userId)
-            userId = userId.userId
-        else {
-            alert("Please login,\nWaiting to see you here :)")
+        let user = sessionStorage.getItem("User")
+        if (!user) { 
+            alert("Please login,\n Waiting to see you here 😊")
             document.location = 'login.html'
             return
         }
-
-        const order = await fetch(`api/Order`, {
+        else
+            user = JSON.parse(user)
+        let product = JSON.parse(sessionStorage.getItem("cartProducts"))
+        let orderItem = []
+        for (let i = 0; i < product.length; i++) {
+            const ord = orderItem.findIndex(p => p.productId == product[i].productId)
+            if (ord > -1)
+                orderItem[ord].quantity++
+            else
+                orderItem.push({ productId: product[i].productId, "quantity":1 })
+        }
+        console.log(user.userId)
+        console.log(user)
+        const order = {
+            "userId": user.userId,
+            "orderSum": sum,
+            "orderDate": new Date,
+            "orderItems": orderItem
+        }
+        
+        const theOrder = await fetch('/api/Order', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: { userId, products }
+            body: JSON.stringify(order)
         })
-        if (!order.ok)
+         if (!theOrder.ok)
             alert("Error: problem on post-order")
         else
             alert("The order created!!")
