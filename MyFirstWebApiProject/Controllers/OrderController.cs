@@ -1,4 +1,7 @@
-﻿using Entities;
+﻿
+using AutoMapper;
+using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using System.Collections.Generic;
@@ -11,17 +14,22 @@ namespace MyFirstWebApiProject.Controllers
     public class OrderController : ControllerBase
     {
         IOrderService _orderService;
+        IMapper _mapper;
+        
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService,IMapper mapper)
         {
             _orderService = orderService;
+            _mapper = mapper;
         }
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<Order> Post([FromBody] int userId, [FromQuery] IEnumerable<Product> products)
+        public async Task<Order> Post([FromBody] Order order)//אפשר להכניס משהו מסוג dto
         {
-            return await _orderService.AddOrder(userId, products);
+            OrderDto orderDto = _mapper.Map<Order, OrderDto>(order);
+            OrderItemDto  orderItemDto = _mapper.Map<OrderItem, OrderItemDto>((OrderItem)order.OrderItems);
+            return await _orderService.AddOrder(orderDto, orderItemDto);
         }
     }
 }

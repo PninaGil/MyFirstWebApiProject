@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,16 @@ namespace Repository
             _myStoreContext = myStoreContext;
         }
 
-        public async Task<Order> AddOrder(Order order)
+        public async Task<Order> AddOrder(OrderDto orderDto, OrderItemDto orderItemDto)
         {
-            await _myStoreContext.Orders.AddAsync(order);
-            foreach (var item in order.OrderItems)
-            {
-                await _myStoreContext.OrderItems.AddAsync(item);
-            }
-            await _myStoreContext.SaveChangesAsync();
-            return order;
+            //await _myStoreContext.Orders.AddAsync(orderDto);
+            //foreach (var item in orderItemDto)
+            //{
+            //    await _myStoreContext.OrderItems.AddAsync(item);
+            //}
+            //await _myStoreContext.SaveChangesAsync();
+            //return order;
+            return null;
         }
     }
 }

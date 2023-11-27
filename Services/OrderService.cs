@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -17,21 +18,17 @@ namespace Services
             this._orderRepository = orderRepository;
         }
 
-        public async Task<Order> AddOrder(int userId, IEnumerable<Product> products)
+        public async Task<Order> AddOrder(OrderDto orderDto, OrderItemDto orderItemDto)
         {
-            Order order = new Order();
+            //צריך לחשב פה מחיר
+            //int sum = 0;
+            //foreach (var p in products)
+            //{
+            //    sum += p.Price;
+            //}
+            //order.OrderSum = sum;
 
-            order.UserId = userId;
-            order.OrderDate = DateTime.Today;
-
-            int sum = 0;
-            foreach (var p in products)
-            {
-                sum += p.Price;
-            }
-            order.OrderSum = sum;
-
-            return await _orderRepository.AddOrder(order);
+            return await _orderRepository.AddOrder(orderDto, orderItemDto);
         }
     }
 }
