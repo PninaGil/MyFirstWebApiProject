@@ -5,6 +5,6 @@ namespace Repository
 {
     public interface IOrderRepository
     {
-        Task<Order> AddOrder(OrderDto orderDto, OrderItemDto orderItemDto);
+        Task<int> AddOrder(OrderDTO orderDTO);
     }
 }

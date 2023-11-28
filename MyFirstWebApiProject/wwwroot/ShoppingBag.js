@@ -31,14 +31,18 @@ const showCart =(product) => {
 
 const placeOrder = async () => {
     try {
+        let products = sessionStorage.getItem("cartProducts")
+        if (!products) {
+            alert("Add products to create your order")
+            return
+        }  
         let user = sessionStorage.getItem("User")
         if (!user) {
             alert("Please login,\n Waiting to see you here 😊")
             document.location = 'login.html'
             return
         }
-        else
-            user = JSON.parse(user)
+        user = JSON.parse(user)
         let product = JSON.parse(sessionStorage.getItem("cartProducts"))
         let orderItem = []
         for (let i = 0; i < product.length; i++) {
@@ -46,10 +50,8 @@ const placeOrder = async () => {
             if (ord > -1)
                 orderItem[ord].quantity++
             else
-                orderItem.push({ productId: product[i].productId, "quantity": 1 })
+                orderItem.push({ "productId": product[i].productId, "quantity": 1, "price": product[i]})
         }
-        console.log(user.userId)
-        console.log(user)
         const order = {
             "userId": user.userId,
             "orderSum": sum,
@@ -65,8 +67,13 @@ const placeOrder = async () => {
         })
         if (!theOrder.ok)
             alert("Error: problem on post-order")
-        else
-            alert("The order created!!")
+        else {
+            const data = await theOrder.json()
+            alert("The order " + data + " created!!")
+            sessionStorage.removeItem("cartProducts")
+            document.location = 'store.html'
+        }
+           
     } catch (ex) {
         alert(ex.message)
     }

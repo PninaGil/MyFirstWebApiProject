@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using AutoMapper;
+using DTO;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,13 +13,15 @@ namespace Repository
     public class ProductRepository : IProductRepository
     {
         private readonly MyStoreContext _myStoreContext;
+        IMapper _mapper;
 
-        public ProductRepository(MyStoreContext myStoreContext)
+        public ProductRepository(MyStoreContext myStoreContext, IMapper mapper)
         {
             _myStoreContext = myStoreContext;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Product>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
+        public async Task<IEnumerable<ProductDTO>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
             var query = _myStoreContext.Products.Where(product =>
             (Desc == null ? (true) : (product.ProductName.Contains(Desc)))
@@ -29,7 +33,8 @@ namespace Repository
             //.Take(skip);
             Console.WriteLine(query.ToQueryString());
             IEnumerable<Product> products = await query.ToListAsync();
-            return products;
+            IEnumerable<ProductDTO> productDTO = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
+            return productDTO;
         }
 
     }

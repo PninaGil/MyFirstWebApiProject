@@ -2,7 +2,7 @@
 
 namespace DTO
 {
-    public class OrderDto
+    public class OrderDTO
     {
         public int OrderId { get; set; }
 
@@ -11,5 +11,7 @@ namespace DTO
         public int? OrderSum { get; set; }
 
         public int? UserId { get; set; }
+
+        public IEnumerable<OrderItemDTO> OrderItems { get; set; } = new List<OrderItemDTO>();
     }
 }

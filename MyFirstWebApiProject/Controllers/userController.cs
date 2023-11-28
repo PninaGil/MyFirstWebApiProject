@@ -2,6 +2,7 @@
 using Services;
 using System.Text.Json;
 using Entities;
+using DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,7 +26,7 @@ namespace MyFirstWebApiProject.Controllers
             User user = await _userService.GetUserByUserNameAndPassword(email, password);
             if(user == null)
                 return NoContent();
-            return Ok(user);
+            return Ok(new { user.FirstName, user.UserId});
         }
 
         // GET api/<loginController>/5
@@ -37,9 +38,9 @@ namespace MyFirstWebApiProject.Controllers
 
         // POST api/<loginController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] UserDTO userDTO)
         {
-            User newUser = await _userService.AddUser(user);
+            User newUser = await _userService.AddUser(userDTO);
             return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
         }
 

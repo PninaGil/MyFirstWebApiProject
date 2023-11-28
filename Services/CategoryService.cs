@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<IEnumerable<CategoryDTO>> GetAllCategories()
         {
             return await _categoryRepository.GetAllCategories();
         }

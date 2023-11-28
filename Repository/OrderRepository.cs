@@ -1,5 +1,6 @@
 ﻿using DTO;
 using Entities;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,21 @@ namespace Repository
     public class OrderRepository : IOrderRepository
     {
         private readonly MyStoreContext _myStoreContext;
+        IMapper _mapper;
 
-        public OrderRepository(MyStoreContext myStoreContext)
+        public OrderRepository(MyStoreContext myStoreContext, IMapper mapper)
         {
             _myStoreContext = myStoreContext;
+            _mapper = mapper;
         }
 
-        public async Task<Order> AddOrder(OrderDto orderDto, OrderItemDto orderItemDto)
+        public async Task<int> AddOrder(OrderDTO orderDTO)
         {
-            //await _myStoreContext.Orders.AddAsync(orderDto);
-            //foreach (var item in orderItemDto)
-            //{
-            //    await _myStoreContext.OrderItems.AddAsync(item);
-            //}
-            //await _myStoreContext.SaveChangesAsync();
-            //return order;
-            return null;
+            Order order = _mapper.Map<OrderDTO,Order>(orderDTO);
+            await _myStoreContext.Orders.AddAsync(order);
+            await _myStoreContext.SaveChangesAsync();
+            int orderId = order.OrderId;
+            return orderId;
         }
     }
 }

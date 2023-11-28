@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class CategoryDto
+    public class CategoryDTO
     {
-        public string? CategoryName { get; set; }
+        public string CategoryName { get; set; }
 
         public int CategoryId { get; set; }
     }

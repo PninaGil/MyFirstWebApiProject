@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Repository;
 
 
@@ -13,9 +14,9 @@ namespace Services
             _userRepository = userRepository;
         }
 
-        public async Task<User> AddUser(User user)
+        public async Task<User> AddUser(UserDTO userDTO)
         {
-            return await _userRepository.AddUser(user);
+            return await _userRepository.AddUser(userDTO);
         }
 
         public async Task<User> GetUserByUserNameAndPassword(string email, string password)

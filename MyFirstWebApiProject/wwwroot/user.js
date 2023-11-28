@@ -22,10 +22,9 @@
         })
         if (!res.ok)
             throw new Error("Error: Adding user to server");
-        const created = await res.json();
         
         document.getElementById("Register").style.visibility = "hidden";
-        alert(`${created.firstName} created`);
+        alert(`${user.firstName} created`);
         }
     }
     catch (ex) {

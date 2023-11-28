@@ -18,7 +18,7 @@ namespace Services
             this._orderRepository = orderRepository;
         }
 
-        public async Task<Order> AddOrder(OrderDto orderDto, OrderItemDto orderItemDto)
+        public async Task<int> AddOrder(OrderDTO orderDTO)
         {
             //צריך לחשב פה מחיר
             //int sum = 0;
@@ -28,7 +28,7 @@ namespace Services
             //}
             //order.OrderSum = sum;
 
-            return await _orderRepository.AddOrder(orderDto, orderItemDto);
+            return await _orderRepository.AddOrder(orderDTO);
         }
     }
 }

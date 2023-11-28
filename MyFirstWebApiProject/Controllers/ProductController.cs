@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -16,7 +17,7 @@ namespace MyFirstWebApiProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Product>> GetProducts(string? Desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
+        public async Task<IEnumerable<ProductDTO>> GetProducts(string? Desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
         {
             return await _productService.GetProducts(Desc, minPrice, maxPrice, categoryIds);
         }

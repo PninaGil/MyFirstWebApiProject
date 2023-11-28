@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTO;
+using Entities;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Services
         {
             _productRepository = userRepository;
         }
-        public async Task<IEnumerable<Product>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
+        public async Task<IEnumerable<ProductDTO>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
             return await _productRepository.GetProducts( Desc,  minPrice, maxPrice, categoryIds);
         }
