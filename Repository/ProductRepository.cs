@@ -37,5 +37,17 @@ namespace Repository
             return productDTO;
         }
 
+        public async Task<int> GetProductsPriceAsync(IEnumerable<OrderItemDTO> orderItems)
+        {
+            int sum = 0;
+            foreach (var item in orderItems)
+            {
+                var product = await _myStoreContext.Products.FindAsync(item.ProductId);
+                if(product!=null)
+                    sum += product.Price * item.Quantity;
+            }
+            return sum;
+        }
+
     }
 }

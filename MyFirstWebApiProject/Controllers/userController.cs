@@ -10,13 +10,17 @@ namespace MyFirstWebApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class UserController : ControllerBase
     {
+
+        private readonly ILogger<UserController> _logger;
         IUserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         // GET: api/<loginController>
@@ -41,6 +45,7 @@ namespace MyFirstWebApiProject.Controllers
         public async Task<ActionResult> Post([FromBody] UserDTO userDTO)
         {
             User newUser = await _userService.AddUser(userDTO);
+            _logger.LogInformation("New user created. UserId: " + newUser.UserId);
             return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
         }
 

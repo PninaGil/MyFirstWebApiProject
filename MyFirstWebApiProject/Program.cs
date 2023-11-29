@@ -1,15 +1,18 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repository;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration _configuration;
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -22,10 +25,10 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+var connectionString = builder.Configuration.GetConnectionString("Store");
+builder.Services.AddDbContext<MyStoreContext>(option => option.UseSqlServer(connectionString));
 
-
-builder.Services.AddDbContext<MyStoreContext>(option => option.UseSqlServer
-("Server=srv2\\pupils;Database=theShop;Trusted_Connection=True;TrustServerCertificate=True"));
+builder.Host.UseNLog();
 
 var app = builder.Build();
 

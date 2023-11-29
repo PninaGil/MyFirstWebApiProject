@@ -1,5 +1,6 @@
 ﻿using DTO;
 using Entities;
+using Microsoft.Extensions.Logging;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -12,21 +13,25 @@ namespace Services
     public class OrderService : IOrderService
     {
         IOrderRepository _orderRepository;
+        IProductRepository _productRepository;
+        ILogger<OrderService> _logger { get; }
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, ILogger<OrderService> logger)
         {
-            this._orderRepository = orderRepository;
+            _orderRepository = orderRepository;
+            _productRepository = productRepository;
+            _logger = logger;
         }
 
         public async Task<int> AddOrder(OrderDTO orderDTO)
         {
-            //צריך לחשב פה מחיר
-            //int sum = 0;
-            //foreach (var p in products)
-            //{
-            //    sum += p.Price;
-            //}
-            //order.OrderSum = sum;
+        
+            int sum = await _productRepository.GetProductsPriceAsync(orderDTO.OrderItems);
+
+            if (sum != orderDTO.OrderSum)
+                _logger.LogInformation($"UserId: {orderDTO.UserId} tried to stole!!");
+
+            orderDTO.OrderSum = sum;
 
             return await _orderRepository.AddOrder(orderDTO);
         }
