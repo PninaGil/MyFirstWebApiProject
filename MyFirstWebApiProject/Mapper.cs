@@ -10,11 +10,11 @@ namespace MyFirstWebApiProject
     {
         public Mapper()
         {
-            CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<Product, ProductDto>();
-            CreateMap<Category, CategoryDto>();
-            CreateMap<Order, OrderDto>().ReverseMap();
-            CreateMap<OrderItem, OrderItemDto>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>();
+            CreateMap<Category, CategoryDTO>();
+            CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
         }
     }
 }

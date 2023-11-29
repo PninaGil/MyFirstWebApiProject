@@ -50,12 +50,13 @@ const placeOrder = async () => {
             if (ord > -1)
                 orderItem[ord].quantity++
             else
-                orderItem.push({ "productId": product[i].productId, "quantity": 1, "price": product[i]})
+                orderItem.push({ "productId": product[i].productId, "quantity": 1, "price": product[i].price})
         }
         const order = {
             "userId": user.userId,
             "orderSum": sum,
-            "orderDate": new Date
+            "orderDate": new Date(),
+            "orderItems": orderItem
         }
 
         const theOrder = await fetch('/api/Order', {

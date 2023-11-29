@@ -25,7 +25,7 @@ namespace MyFirstWebApiProject.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<int> Post([FromBody] OrderDTO orderDTO)//אפשר להכניס משהו מסוג DTO
+        public async Task<int> Post([FromBody] OrderDTO orderDTO)
         {
             return await _orderService.AddOrder(orderDTO);
         }

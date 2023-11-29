@@ -12,6 +12,6 @@ namespace DTO
 
         public int? UserId { get; set; }
 
-        public IEnumerable<OrderItemDTO> OrderItems { get; set; } = new List<OrderItemDTO>();
+        public ICollection<OrderItemDTO> OrderItems { get; set; } 
     }
 }
