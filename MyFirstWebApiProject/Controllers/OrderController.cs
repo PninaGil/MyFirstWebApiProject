@@ -4,8 +4,6 @@ using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using System.Collections.Generic;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFirstWebApiProject.Controllers
 {
@@ -27,7 +25,8 @@ namespace MyFirstWebApiProject.Controllers
         [HttpPost]
         public async Task<int> Post([FromBody] OrderDTO orderDTO)
         {
-            return await _orderService.AddOrder(orderDTO);
+            Order order = _mapper.Map<OrderDTO, Order>(orderDTO);
+            return await _orderService.AddOrder(order);
         }
     }
 }

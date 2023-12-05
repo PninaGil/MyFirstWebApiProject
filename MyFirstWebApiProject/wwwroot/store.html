@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <script src="../store.js"></script>
-    <link href="../store.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="icons/picture_313.jpg" />
+    <script src="./scripts/store.js"></script>
+    <link href="./styleSheets/store.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./icons/favicon.png" />
 
 
     <meta charset="utf-8" />
@@ -85,10 +85,10 @@
 
         <div id="nameFilter" class="nameFilter filterBreak">
 
-            <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
+            <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש מוצר">
 
             <button class="floatRight" tabindex="0" onclick="filterProducts()">
-                <span class="header42"><img src="searchIcon.svg" alt="סמל חיפוש"></span>
+                <span class="header42"><img src="./icons/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
         <div id="priceRangeFilter" class="filterBreak">
@@ -100,7 +100,7 @@
             <input type="text" maxlength="9" id="maxPrice" class="priceInputText" placeholder="Max">
             <span class="priceCurrency">₪</span>
             <button onclick="filterProducts()">
-                <span><img src="searchIcon.svg" alt="סמל חיפוש"></span>
+                <span><img src="./icons/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
     </div>

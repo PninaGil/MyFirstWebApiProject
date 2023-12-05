@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using DTO;
 using Entities;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +17,9 @@ namespace Repository
             
         }
 
-
-        public async Task<User> AddUser(UserDTO userDTO)
+        public async Task<User> AddUser(UserLoginDTO userLoginDTO)
         {
-            User user = _mapper.Map<UserDTO, User>(userDTO);
+            User user = _mapper.Map<UserLoginDTO, User>(userLoginDTO);
             await _myStoreContext.Users.AddAsync(user);
             await _myStoreContext.SaveChangesAsync();
             return user;
@@ -38,10 +31,16 @@ namespace Repository
              
         }
 
-        public async Task UpdateUser(int id, User userToUpdate)
+        public async Task<User> GetUserById(int id)
+        {
+            return await _myStoreContext.Users.Where(user => user.UserId == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<User> UpdateUser(int id, User userToUpdate)
         {
             _myStoreContext.Users.Update(userToUpdate);
             await _myStoreContext.SaveChangesAsync();
+            return await GetUserById(id);
         }
     }
 }

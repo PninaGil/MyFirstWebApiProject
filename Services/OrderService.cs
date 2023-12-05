@@ -1,12 +1,6 @@
-﻿using DTO;
-using Entities;
+﻿using Entities;
 using Microsoft.Extensions.Logging;
 using Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
@@ -23,17 +17,17 @@ namespace Services
             _logger = logger;
         }
 
-        public async Task<int> AddOrder(OrderDTO orderDTO)
+        public async Task<int> AddOrder(Order order)
         {
-        
-            int sum = await _productRepository.GetProductsPriceAsync(orderDTO.OrderItems);
 
-            if (sum != orderDTO.OrderSum)
-                _logger.LogInformation($"UserId: {orderDTO.UserId} tried to stole!!");
+            int sum = await _productRepository.GetProductsPriceAsync(order.OrderItems);
 
-            orderDTO.OrderSum = sum;
+            if (sum != order.OrderSum)
+                _logger.LogError($"UserId: {order.UserId} tried to stole!!");
 
-            return await _orderRepository.AddOrder(orderDTO);
+            order.OrderSum = sum;
+
+            return await _orderRepository.AddOrder(order);
         }
     }
 }

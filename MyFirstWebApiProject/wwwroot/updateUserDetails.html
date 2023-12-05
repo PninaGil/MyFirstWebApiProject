@@ -2,23 +2,24 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Update user details</title>
+    <script src="./scripts/user.js"></script>
+
+    <link href="./styleSheets/forms.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./icons/favicon.png" />
+
     <h1 id="welcome" value="" />
-    <script src="user.js"></script>
-    <script>document.getElementById("welcome").innerText = "Welcome " + JSON.parse(sessionStorage.getItem("User")).firstName + "!"</script>
-    <link href="forms.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="icons/favicon.png" />
+    <script>document.getElementById("welcome").innerText = "Welcome " + (JSON.parse(sessionStorage.getItem("User")).firstName).trim() + "!"</script>
+
 
 </head>
-<body>
-    <!--<h1 id="welcome">Welcome </h1>-->
+<body onload="fillFields()">
     <div id="Update" class="container">
         <label for="txtEmail">email</label><br />
         <input id="txtEmail" type="email" required /><br />
         <label for="txtPassword">password</label><br />
-        <input id="txtPassword" type="password" required maxlength="15" minLength="8" /><br />
-        <button onclick="checkPassword(txtPassword.value)">Check password strength</button><br />
-        <progress id="progress" value="0" max="4"></progress><br />
+        <input id="txtPassword" type="password" required maxlength="15" minLength="8" oninput="checkPassword(txtPassword.value)" />
+        <progress id="progress" value="0" max="4"></progress><br /><br />
         <label for="txtFName">first name</label><br />
         <input id="txtFName" type="text" maxlength="20" min="2" /><br />
         <label for="txtLName">last name</label><br />

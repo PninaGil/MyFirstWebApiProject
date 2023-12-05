@@ -15,9 +15,8 @@ const filterProducts = async () => {
             url += "&categoryIds=" + opt[i].id
     }
 
-    try {   
-        /*const categoryids = document.getElementById("")*/
-        const product = await fetch(url,{
+    try {
+        const product = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,13 +24,17 @@ const filterProducts = async () => {
             body: JSON.stringify()
         })
         if (!product.ok)
-            throw("problem on get products")
+            throw ("problem on get products")
+
         const products = await product.json()
+
+        document.getElementById("counter").innerHTML = await products.length
+
         document.getElementById("ProductList").replaceChildren([])
 
         products.forEach(p => drawProduct(p))
     } catch (ex) {
-        alert(ex.message+" products")
+        alert(ex.message + " products")
     }
 }
 
@@ -69,7 +72,6 @@ const getCategories = async () => {
         for (let i = 0; i < category.length; i++) {
             showCategory(category[i])
         }
-        //category.forEach(cat => console.log(cat), showCategory(cat))
     } catch (ex) {
         alert(ex.message)
     }
@@ -81,7 +83,7 @@ const showCategory = (category) => {
     cloneCategory.querySelector(".opt").id = category.categoryId
     cloneCategory.querySelector("label").setAttribute("for", category.id);
     document.getElementById("categoryList").addEventListener('click', () => filterProducts())
-    document.getElementById("categoryList").appendChild(cloneCategory) 
+    document.getElementById("categoryList").appendChild(cloneCategory)
 
 }
 

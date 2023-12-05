@@ -2,11 +2,6 @@
 using DTO;
 using Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -21,29 +16,28 @@ namespace Repository
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
+        public async Task<IEnumerable<Product>> GetProducts(string? Desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
             var query = _myStoreContext.Products.Where(product =>
-            (Desc == null ? (true) : (product.ProductName.Contains(Desc)))
+            ((Desc == null ? (true) : (product.ProductName.Contains(Desc)))
+            || (Desc == null ? (true) : (product.Description.Contains(Desc))))
             && ((minPrice == null) ? (true) : (product.Price >= minPrice))
             && ((maxPrice == null) ? (true) : (product.Price <= maxPrice))
             && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(product.CategoryId)))
-            ).OrderBy(product => product.ProductName);
-            //.Skip((position-1)*skip)
-            //.Take(skip);
-            Console.WriteLine(query.ToQueryString());
+            ).OrderBy(product => product.ProductName).Include(product => product.Category);
+
+
             IEnumerable<Product> products = await query.ToListAsync();
-            IEnumerable<ProductDTO> productDTO = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTO>>(products);
-            return productDTO;
+            return products;
         }
 
-        public async Task<int> GetProductsPriceAsync(IEnumerable<OrderItemDTO> orderItems)
+        public async Task<int> GetProductsPriceAsync(IEnumerable<OrderItem> orderItems)
         {
             int sum = 0;
             foreach (var item in orderItems)
             {
                 var product = await _myStoreContext.Products.FindAsync(item.ProductId);
-                if(product!=null)
+                if (product != null)
                     sum += product.Price * item.Quantity;
             }
             return sum;

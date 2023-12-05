@@ -14,7 +14,6 @@ namespace MyFirstWebApiProject.Middleware
     public class RatingMiddleware
     {
         private readonly RequestDelegate _next;
-        private IRatingService _ratingService;
 
         public RatingMiddleware(RequestDelegate next)
         {
@@ -23,26 +22,19 @@ namespace MyFirstWebApiProject.Middleware
 
         public async Task Invoke(HttpContext httpContext, IRatingService ratingService)
         {
-            _ratingService = ratingService;
 
-            Rating rating = new Rating();
-            rating.Host = httpContext.Request.GetDisplayUrl();
-            rating.Method = httpContext.Request.Method;
-            rating.Path = httpContext.Request.Path;
-            rating.Referer = httpContext.Request.Host.ToString();
-            rating.UserAgent = httpContext.Request.Headers.UserAgent;
-            rating.RecordDate = DateTime.Now;
-            
-           await _ratingService.AddRatingAsync(rating);
+            Rating rating = new()
+            {
+                Host = httpContext.Request.Host.Value,
+                Method = httpContext.Request.Method,
+                Path = httpContext.Request.Path,
+                Referer = httpContext.Request.Headers.Referer,
+                UserAgent = httpContext.Request.Headers.UserAgent,
+                RecordDate = DateTime.Now
+            };
 
-//            •	HOST - כתובת האתר בה אנו גולשים כעת
-//•	METHOD - המתודה אליה נגשנו)
-//•	[PATH] URL ה-אליו בוצעה הפניה
-//•	REFERER - הדף ממנו התבצעה הפניה
-//•	USER_AGENT - מכיל את שם הדפדפן, גירסתו, מערכת ההפעלה ושפתה
-//•	RECORD_DATE
-
-            _next(httpContext);
+            await ratingService.AddRatingAsync(rating);
+            await _next(httpContext);
         }
     }
 

@@ -14,9 +14,9 @@ namespace Services
             _userRepository = userRepository;
         }
 
-        public async Task<User> AddUser(UserDTO userDTO)
+        public async Task<User> AddUser(UserLoginDTO userLoginDTO)
         {
-            return await _userRepository.AddUser(userDTO);
+            return await _userRepository.AddUser(userLoginDTO);
         }
 
         public async Task<User> GetUserByUserNameAndPassword(string email, string password)
@@ -24,9 +24,14 @@ namespace Services
             return await _userRepository.GetUserByEmailAndPassword(email, password);
         }
 
-        public async Task UpdateUser(int id, User userToUpdate)
+        public async Task<User> GetUserById(int id)
         {
-            await _userRepository.UpdateUser(id, userToUpdate);
+            return await _userRepository.GetUserById(id);
+        }
+
+        public async Task<User> UpdateUser(int id, User userToUpdate)
+        {
+            return await _userRepository.UpdateUser(id, userToUpdate);
         }
         public int checkpassword(string pwd)
         {

@@ -38,7 +38,7 @@ var app = builder.Build();
 
 app.UseErrorHandlingMiddleware();
 
-//app.UseRatingMiddleware();
+app.UseRatingMiddleware();
 
 if (app.Environment.IsDevelopment())
 {

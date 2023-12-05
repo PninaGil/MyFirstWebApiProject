@@ -11,7 +11,8 @@ namespace MyFirstWebApiProject
         public Mapper()
         {
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductDTO>().ForMember(dest => dest.CategoryName,
+                           opts => opts.MapFrom(src => src.Category.CategoryName)).ReverseMap();
             CreateMap<Category, CategoryDTO>();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();

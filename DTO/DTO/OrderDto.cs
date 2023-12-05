@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
+﻿
 namespace DTO
 {
     public class OrderDTO
@@ -12,6 +11,6 @@ namespace DTO
 
         public int? UserId { get; set; }
 
-        public ICollection<OrderItemDTO> OrderItems { get; set; } 
+        public ICollection<OrderItemDTO> OrderItems { get; set; }
     }
 }

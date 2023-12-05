@@ -1,10 +1,9 @@
-﻿using DTO;
-using Entities;
+﻿using Entities;
 
 namespace Repository
 {
     public interface IOrderRepository
     {
-        Task<int> AddOrder(OrderDTO orderDTO);
+        Task<int> AddOrder(Order order);
     }
 }

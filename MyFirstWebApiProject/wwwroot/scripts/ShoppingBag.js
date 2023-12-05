@@ -1,10 +1,12 @@
 ﻿let sum = 0
+
 const getProduct = async () => {
     let products = JSON.parse(sessionStorage.getItem("cartProducts"))
-    
+
     let count = 0
     if (!products) {
-        document.getElementById("noItems").innerText="Add products to cart to see them here."
+        document.getElementById("noItems").innerText = "Add products to cart to see them here."
+        return
     }
 
     for (let i = 0; i < products.length; i++) {
@@ -13,16 +15,14 @@ const getProduct = async () => {
         count++
     }
     document.getElementById("itemCount").innerText = count
-    document.getElementById("totalAmount").innerText = sum+' ₪'
-
+    document.getElementById("totalAmount").innerText = sum + ' ₪'
 }
 
 
-const showCart =(product) => {
+const showCart = (product) => {
     let temp = document.getElementById("temp-row")
     var cloneCart = temp.content.cloneNode(true)
     cloneCart.querySelector(".image").src = `./pic/${product.image}`
-    //cloneCart.querySelector(".descriptionColumn").innerText = product.description
     cloneCart.querySelector(".descriptionColumn").innerText = product.productName
     cloneCart.querySelector(".price").innerText = product.price + ' ₪'
     cloneCart.querySelector("#deleteButton").addEventListener('click', () => deleteItem(product))
@@ -32,13 +32,14 @@ const showCart =(product) => {
 const placeOrder = async () => {
     try {
         let products = sessionStorage.getItem("cartProducts")
+        console.log(products)
         if (!products) {
             alert("Add products to create your order")
             return
-        }  
+        }
         let user = sessionStorage.getItem("User")
         if (!user) {
-            alert("Please login,\n Waiting to see you here 😊")
+            alert("Please login,\n Waiting to see you here!")
             document.location = 'login.html'
             return
         }
@@ -50,7 +51,7 @@ const placeOrder = async () => {
             if (ord > -1)
                 orderItem[ord].quantity++
             else
-                orderItem.push({ "productId": product[i].productId, "quantity": 1, "price": product[i].price})
+                orderItem.push({ "productId": product[i].productId, "quantity": 1, "price": product[i].price })
         }
         const order = {
             "userId": user.userId,
@@ -70,11 +71,11 @@ const placeOrder = async () => {
             alert("Error: problem on post-order")
         else {
             const data = await theOrder.json()
-            alert("The order " + data + " created!!")
+            alert("Order ID " + data + " placed successfully")
             sessionStorage.removeItem("cartProducts")
             document.location = 'store.html'
         }
-           
+
     } catch (ex) {
         alert(ex.message)
     }
@@ -82,8 +83,14 @@ const placeOrder = async () => {
 
 
 const deleteItem = (product) => {
+
     let cart = JSON.parse(sessionStorage.getItem("cartProducts"))
-    cart = cart.filter(p => p.productId != product.productId)
+    const ind = cart.findIndex(productInCart => productInCart.productId == product.productId)
+    cart.splice(ind, 1)
     JSON.stringify(sessionStorage.setItem("cartProducts", JSON.stringify(cart)))
-    document.location="ShoppingBag.html"
+
+    if (cart.length == 0)
+        sessionStorage.removeItem("cartProducts")
+
+    document.location = "ShoppingBag.html"
 }

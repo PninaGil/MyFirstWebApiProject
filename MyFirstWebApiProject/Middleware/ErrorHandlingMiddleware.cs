@@ -8,7 +8,6 @@ namespace MyFirstWebApiProject.Middleware
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private ILogger<ErrorHandlingMiddleware> _logger;
 
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
@@ -17,14 +16,13 @@ namespace MyFirstWebApiProject.Middleware
 
         public async Task Invoke(HttpContext httpContext, ILogger<ErrorHandlingMiddleware> logger)
         {
-            _logger = logger;
             try
             {
                await _next(httpContext);
             }
             catch(Exception ex)
             {
-                _logger.LogError($"Logged from middleware: {ex.Message} \n{ex.StackTrace}");
+                logger.LogError($"Logged from middleware: {ex.Message} \n{ex.StackTrace}");
                 httpContext.Response.StatusCode = 500;
                 await httpContext.Response.WriteAsync("Internal error in server");
             }

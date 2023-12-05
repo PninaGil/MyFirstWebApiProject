@@ -5,8 +5,9 @@ namespace Repository
 {
     public interface IUserRepository
     {
-        Task<User> AddUser(UserDTO userDTO);
+        Task<User> AddUser(UserLoginDTO userLoginDTO);
         Task<User> GetUserByEmailAndPassword(string email, string password);
-        Task UpdateUser(int id, User userToUpdate);
+        Task<User> GetUserById(int id);
+        Task<User> UpdateUser(int id, User userToUpdate);
     }
 }

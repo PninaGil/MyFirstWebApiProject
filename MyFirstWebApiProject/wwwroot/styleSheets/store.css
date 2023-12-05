@@ -41,7 +41,9 @@ ul {
     float: left;
     height: 550px;
     margin: 6px;
+    background-color: white;
 }
+
 
 .img-w {
     height: 300px;
