@@ -1,7 +1,10 @@
 Hi!
 My name is Pnini, student for computer science, and I'm very proud to introduce my first web API project.
+
 This project represents a toy store.
+
 To run my project you need Visual Studio 2022 and up. You can use code-first ability to create the DB.
+
 The project is written with the .Net 7 environment, and the web API architecture. The client side is written in JS, HTML and CSS.
 I added a Middleware to catch exceptions and handle them.
 One more Middleware was created to save the rating- client's request's details in the DB.
