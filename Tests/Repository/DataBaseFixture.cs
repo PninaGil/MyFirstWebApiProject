@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.Repository
+namespace Tests.Repository
 {
     public class DatabaseFixture : IDisposable
     {

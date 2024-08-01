@@ -5,12 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Moq;
-using Moq.EntityFrameworkCore;
-using Xunit;
 
 
-namespace Test.Repository
+namespace Tests.Repository
 {
     public class UserRepositoryIntegrationTest
     {
@@ -33,7 +30,7 @@ namespace Test.Repository
 
             var result = await _userRepository.GetUserByEmailAndPassword(email, password);
 
-            Xunit.Assert.NotNull(result);
+            Assert.NotNull(result);
         }
     }
 }
